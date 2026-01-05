@@ -1,0 +1,20 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { RegisterPageController } from './register-page.controller';
+import { RegisterPageService } from './register-page.service';
+
+describe('RegisterPageController', () => {
+  let controller: RegisterPageController;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [RegisterPageController],
+      providers: [RegisterPageService],
+    }).compile();
+
+    controller = module.get<RegisterPageController>(RegisterPageController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
