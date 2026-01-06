@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Task } from "../../types/task";
 import { toast } from "react-toastify";
 
 function TaskList() {
-  const navigate = useNavigate();
-  const Data = async () => {
-    const res = await fetch("http://localhost:3000/tasks");
-    setTableData(await res.json());
-  };
-
   const [tableData, setTableData] = useState<Task[]>([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const Data = async () => {
+      const res = await fetch("http://localhost:3000/tasks", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setTableData(await res.json());
+    };
+    Data();
+  }, []);
+
   return (
     <div
       style={{
@@ -49,12 +57,20 @@ function TaskList() {
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={async() => {
-                       await fetch(`http://localhost:3000/tasks/${item.id}`, {
+                    onClick={async () => {
+                      await fetch(`http://localhost:3000/tasks/${item.id}`, {
                         method: "DELETE",
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                          )}`,
+                        },
                       });
-                      Data();
-                      toast.success("Task Deleted Succesfully...",{autoClose:1000})
+                      toast.success("Task Deleted Succesfully...", {
+                        autoClose: 1000,
+                      });
+                      setTableData(tableData.filter((task)=>task.id!==item.id))
                     }}
                   ></button>
                 </td>
@@ -72,9 +88,6 @@ function TaskList() {
       >
         <button className="btn btn-primary" onClick={() => navigate("/")}>
           Go to Add Task
-        </button>
-        <button className="btn btn-primary" onClick={() => Data()}>
-          Load Data
         </button>
       </div>
     </div>

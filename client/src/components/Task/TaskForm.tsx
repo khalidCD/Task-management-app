@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function TaskForm() {
-  const postData = () => {
-    fetch("http://localhost:3000/tasks", {
+  const postData = async () => {
+    const res = await fetch("http://localhost:3000/tasks", {
       method: "POST",
       body: JSON.stringify({
         title: Title.trim(),
@@ -12,8 +12,17 @@ function TaskForm() {
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
+    if (res.status === 401) {
+      toast.error("Unauthorized User");
+      navigate("/login");
+    }
+
+    if (res.status === 201)
+      toast.success("New Task Added Successfully...", { autoClose: 1000 });
+
     setTitle("");
     setDescription("");
   };
@@ -28,13 +37,18 @@ function TaskForm() {
       toast.error("Please fill all details...", { autoClose: 1000 });
     } else {
       postData();
-      toast.success("New Task Added Successfully...", { autoClose: 1000 });
     }
   };
   return (
     <>
       <div style={{ display: "flex", justifyContent: "end" }}>
-        <button className="btn btn-danger" onClick={() => navigate("/login")}>
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            navigate("/login");
+            localStorage.removeItem("token");
+          }}
+        >
           Logout
         </button>
       </div>

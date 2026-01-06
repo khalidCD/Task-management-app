@@ -10,7 +10,10 @@ import {
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-tasks.dto';
 import { TaskPipe } from './pipes/task.pipe';
+import { UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/guard/jwt-auth.guard';
 
+@UseGuards(JwtGuard)
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}

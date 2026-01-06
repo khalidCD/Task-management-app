@@ -8,23 +8,28 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const Loginuser = async () => {
-    const response = await fetch("http://localhost:3000/login-page", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: userName.trim(),
-        password: password.trim(),
-      }),
-    });
+    try {
+      const response = await fetch("http://localhost:3000/login-page", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: userName.trim(),
+          password: password.trim(),
+        }),
+      });
 
-    const data = await response.json();
-    if (data.message === "Login successful") {
-      toast.success(data.message, { autoClose: 1000 });
-      navigate("/");
-    } else {
-      toast.error(data.message, { autoClose: 1000 });
+      const data = await response.json();
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        toast.success("Login successful", { autoClose: 1000 });
+        navigate("/");
+      } else {
+        toast.error(data.message || "Login failed", { autoClose: 1000 });
+      }
+    } catch  {
+      toast.error("Server error", { autoClose: 1000 });
     }
   };
 
