@@ -43,7 +43,7 @@ git clone https://github.com/khalidCD/Task-management-app.git
 ---
 ### 2.Go to project folder
 ```bash
-cd task-management-app
+cd client
 ```
 
 ### 3.Install dependencies
