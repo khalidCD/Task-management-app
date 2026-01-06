@@ -6,6 +6,7 @@ import TaskList from "./components/Task/TaskList";
 import { ToastContainer } from "react-toastify";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
+import { RouteHandling } from "./components/routeHandling";
 
 // import Button from "./components/Button";
 function App() {
@@ -17,8 +18,8 @@ function App() {
       {/* <Button ButtonName="My Button"></Button> */}
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<TaskForm />} />
-        <Route path="/tasklist" element={<TaskList />} />
+        <Route path="/" element={<RouteHandling><TaskForm /></RouteHandling>} />
+        <Route path="/tasklist" element={<RouteHandling><TaskList /></RouteHandling>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login/>} />
       </Routes>
