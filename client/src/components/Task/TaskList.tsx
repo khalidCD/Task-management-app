@@ -86,7 +86,7 @@ function TaskList() {
           gap: "10px",
         }}
       >
-        <button className="btn btn-primary" onClick={() => navigate("/")}>
+        <button className="btn btn-primary" onClick={() => navigate("/tasks")}>
           Go to Add Task
         </button>
       </div>

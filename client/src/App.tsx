@@ -18,7 +18,7 @@ function App() {
       {/* <Button ButtonName="My Button"></Button> */}
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<RouteHandling><TaskForm /></RouteHandling>} />
+        <Route path="/tasks" element={<RouteHandling><TaskForm /></RouteHandling>} />
         <Route path="/tasklist" element={<RouteHandling><TaskList /></RouteHandling>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login/>} />

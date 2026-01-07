@@ -24,7 +24,7 @@ function Login() {
       if (data.token) {
         localStorage.setItem("token", data.token);
         toast.success("Login successful", { autoClose: 1000 });
-        navigate("/");
+        navigate("/tasks");
       } else {
         toast.error(data.message || "Login failed", { autoClose: 1000 });
       }
